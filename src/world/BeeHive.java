@@ -230,6 +230,7 @@ public class BeeHive {
     public synchronized void addBee(Bee bee) {
         this.bees.add(bee);
         this.numBorn++;
+        bee.start();
     }
 
     /**

@@ -81,6 +81,8 @@ public class Queen extends Bee {
                 if (this.beeHive.getQueensChamber().hasDrone()) {
                     this.beeHive.getQueensChamber().summonDrone();
                     this.readyToMate = false;
+                    //this.beeHive.getQueensChamber().getTopDrone().setMated();
+
                     try {
                         sleep(SLEEP_TIME_MS);
                     } catch (InterruptedException e) {
@@ -108,11 +110,7 @@ public class Queen extends Bee {
             }
         }
         this.readyToMate = true;
-        for (int i = 0; i < this.beeHive.getQueensChamber().dronesRemaining(); i++) {
-            this.beeHive.getQueensChamber().dismissDrone();
-        }
-
-        this.beeHive.getQueensChamber().setDismissed();
+        //this.beeHive.getQueensChamber().setDismissed();
         while (this.beeHive.getQueensChamber().hasDrone()) {
             this.beeHive.getQueensChamber().dismissDrone();
         }
