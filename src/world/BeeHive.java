@@ -57,6 +57,10 @@ public class BeeHive {
         this.nectar = this.pollen = 0;
 
         // create the bees!
+        this.bees.add(Bee.createBee(Role.QUEEN, Resource.NONE, this));
+        for (int i=0; i<numDrones; ++i ) {
+            this.bees.add(Bee.createBee(Role.DRONE, Resource.NONE, this));
+        }
         for (int i=0; i<numNectarWorkers; ++i ) {
             this.bees.add(Bee.createBee(Role.WORKER, Resource.NECTAR, this));
         }
@@ -64,7 +68,8 @@ public class BeeHive {
             this.bees.add(Bee.createBee(Role.WORKER, Resource.POLLEN, this));
         }
 
-        // TODO create queen and drone bees
+
+
 
         this.active = true;
         this.numBorn = this.bees.size();
@@ -224,6 +229,7 @@ public class BeeHive {
      */
     public synchronized void addBee(Bee bee) {
         this.bees.add(bee);
+        this.numBorn++;
     }
 
     /**

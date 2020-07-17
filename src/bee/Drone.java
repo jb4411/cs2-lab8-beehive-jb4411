@@ -29,10 +29,8 @@ public class Drone extends Bee {
     /**
      * The queen will let the drone know when they have mated.
      */
-    public void setMated() {
-        if (this.beeHive.isActive()) {
-            this.mated = true;
-        }
+    public synchronized void setMated() {
+        this.mated = true;
     }
 
     /**

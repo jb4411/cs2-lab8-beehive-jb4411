@@ -2,7 +2,7 @@
   <configuration default="false" name="BeeMain" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="BeeMain" />
     <module name="BeeHive" />
-    <option name="PROGRAM_PARAMETERS" value="10 0 2 2" />
+    <option name="PROGRAM_PARAMETERS" value="10 1 2 2" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

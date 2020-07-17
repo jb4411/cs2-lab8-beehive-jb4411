@@ -74,6 +74,7 @@ public class Queen extends Bee {
      * still waiting in her chamber.
      */
     public void run() {
+        this.beeHive.getQueensChamber().setQueen(this);
         while (this.beeHive.isActive()) {
             if (this.beeHive.hasResources()) {
                 this.readyToMate = true;
@@ -107,6 +108,11 @@ public class Queen extends Bee {
             }
         }
         this.readyToMate = true;
+        for (int i = 0; i < this.beeHive.getQueensChamber().dronesRemaining(); i++) {
+            this.beeHive.getQueensChamber().dismissDrone();
+        }
+
+        this.beeHive.getQueensChamber().setDismissed();
         while (this.beeHive.getQueensChamber().hasDrone()) {
             this.beeHive.getQueensChamber().dismissDrone();
         }

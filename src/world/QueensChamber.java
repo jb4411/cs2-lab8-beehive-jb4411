@@ -20,21 +20,27 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class QueensChamber {
     private ConcurrentLinkedQueue<Bee> drones;
     private Queen queen;
+    private boolean dismissed;
 
     /**
      * Create the chamber. Initially there are no drones in the chamber and the
      * queen is not ready to mate.
      */
     public QueensChamber() {
+        this.dismissed = false;
         this.drones = new ConcurrentLinkedQueue<>();
     }
 
-    public void setQueen(Queen queen) {
+    public synchronized void setQueen(Queen queen) {
         this.queen = queen;
     }
 
-    public Queen getQueen() {
-        return this.queen;
+    public synchronized void setDismissed() {
+        this.dismissed = true;
+    }
+
+    public synchronized int dronesRemaining() {
+        return this.drones.size();
     }
 
     /**
@@ -53,7 +59,6 @@ public class QueensChamber {
      * @param drone the drone who just entered the chamber
      */
     public synchronized void enterChamber(Drone drone) {
-
         this.drones.add(drone);
         while (this.drones.peek() != drone || !this.queen.isReadyToMate()) {
             try {
@@ -62,7 +67,10 @@ public class QueensChamber {
                 e.printStackTrace();
             }
         }
-        drone.setMated();
+        this.drones.remove(drone);
+        if (!this.dismissed) {
+            drone.setMated();
+        }
     }
 
     /**
@@ -88,6 +96,7 @@ public class QueensChamber {
      * dismiss all the drones that were waiting to mate. #rit_irl...
      */
     public synchronized void dismissDrone() {
+
         notifyAll();
     }
 
