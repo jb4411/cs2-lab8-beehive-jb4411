@@ -9,7 +9,7 @@ import world.BeeHive;
  * endophallus gets ripped off and he perishes soon after mating.
  *
  * @author Sean Strout @ RIT CS
- * @author YOUR NAME HERE
+ * @author Jesse Burdick-Pless jb4411@g.rit.edu
  */
 public class Drone extends Bee {
 

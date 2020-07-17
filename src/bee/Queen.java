@@ -18,7 +18,7 @@ import world.BeeHive;
  * netflix before she chills with her next drone.
  *
  * @author Sean Strout @ RIT CS
- * @author YOUR NAME HERE
+ * @author Jesse Burdick-Pless jb4411@g.rit.edu
  */
 public class Queen extends Bee {
     /**

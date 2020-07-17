@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * uses the resources in order to support reproduction.
  *
  * @author Sean Strout @ RIT CS
- * @author YOUR NAME HERE
+ * @author Jesse Burdick-Pless jb4411@g.rit.edu
  */
 public class BeeHive {
     /** the field of flowers */
