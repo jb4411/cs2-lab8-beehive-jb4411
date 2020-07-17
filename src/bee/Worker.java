@@ -79,5 +79,6 @@ public class Worker extends Bee {
             e.printStackTrace();
         }
         this.flowerField.exitField(this);
+        this.beeHive.deposit(this.resource,this);
     }
 }
