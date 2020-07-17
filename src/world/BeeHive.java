@@ -212,7 +212,8 @@ public class BeeHive {
      * @param bee the bee who perished
      */
     public synchronized void beePerished (Bee bee){
-        // TODO
+        this.bees.remove(bee);
+        this.perishedBees.add(bee);
     }
 
     /**
@@ -222,7 +223,7 @@ public class BeeHive {
      * @param bee the new bee
      */
     public synchronized void addBee(Bee bee) {
-        // TODO
+        this.bees.add(bee);
     }
 
     /**
@@ -232,8 +233,7 @@ public class BeeHive {
      * @return do we have enough resources?
      */
     public synchronized boolean hasResources() {
-        // TODO
-        return false;
+        return this.pollen >= 1 && this.nectar >= 1;
     }
 
     /**
@@ -243,7 +243,8 @@ public class BeeHive {
      * @rit.pre {@link BeeHive#hasResources()} is true
      */
     public synchronized void claimResources() {
-        // TODO
+        this.pollen--;
+        this.nectar--;
     }
 
     /**

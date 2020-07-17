@@ -2,6 +2,8 @@ package bee;
 
 import world.BeeHive;
 
+import static bee.Queen.MATE_TIME_MS;
+
 /**
  * The male drone bee has a tough life.  His only job is to mate with the queen
  * by entering the queen's chamber and awaiting his royal highness for some
@@ -12,7 +14,7 @@ import world.BeeHive;
  * @author Jesse Burdick-Pless jb4411@g.rit.edu
  */
 public class Drone extends Bee {
-
+    private boolean mated;
     /**
      * When the drone is created they should retrieve the queen's
      * chamber from the bee hive and initially the drone has not mated.
@@ -21,6 +23,16 @@ public class Drone extends Bee {
      */
     public Drone(BeeHive beeHive){
         super(Role.DRONE, beeHive);
+        this.mated = false;
+    }
+
+    /**
+     * The queen will let the drone know when they have mated.
+     */
+    public void setMated() {
+        if (this.beeHive.isActive()) {
+            this.mated = true;
+        }
     }
 
     /**
@@ -39,6 +51,17 @@ public class Drone extends Bee {
      * sleeping.
      */
     public void run() {
-        // TODO
+        if (this.beeHive.isActive()) {
+            this.beeHive.getQueensChamber().enterChamber(this);
+        }
+        if (this.mated) {
+            try {
+                sleep(MATE_TIME_MS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            this.beeHive.beePerished(this);
+            System.out.println("*D* " + this + " has perished!");
+        }
     }
 }

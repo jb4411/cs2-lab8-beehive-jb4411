@@ -1,6 +1,8 @@
 package bee;
 
+import util.RandomBee;
 import world.BeeHive;
+import world.QueensChamber;
 
 /**
  * The queen is the master of the bee hive and the only bee that is allowed
@@ -33,6 +35,8 @@ public class Queen extends Bee {
     /** the maximum number of new bees that will be created by one mating session */
     public final static int MAX_NEW_BEES = 4;
 
+    private boolean readyToMate;
+
     /**
      * Create the queen.  She should get the queen's chamber from the bee hive.
      *
@@ -40,6 +44,11 @@ public class Queen extends Bee {
      */
     public Queen(BeeHive beeHive) {
         super(Role.QUEEN, beeHive);
+        this.readyToMate = false;
+    }
+
+    public boolean isReadyToMate() {
+        return this.readyToMate;
     }
 
     /**
@@ -65,6 +74,41 @@ public class Queen extends Bee {
      * still waiting in her chamber.
      */
     public void run() {
-        // TODO
+        while (this.beeHive.isActive()) {
+            if (this.beeHive.hasResources()) {
+                this.readyToMate = true;
+                if (this.beeHive.getQueensChamber().hasDrone()) {
+                    this.beeHive.getQueensChamber().summonDrone();
+                    this.readyToMate = false;
+                    try {
+                        sleep(SLEEP_TIME_MS);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    int num_bees = RandomBee.nextInt(MIN_NEW_BEES, MAX_NEW_BEES);
+                    int i = num_bees;
+                    while (this.beeHive.hasResources() && i > 0) {
+                        this.beeHive.claimResources();
+                        int bee_type =RandomBee.nextInt(1, 10);
+                        if (bee_type > 4) {
+                            this.beeHive.addBee(Bee.createBee(Role.DRONE, Worker.Resource.NONE, this.beeHive));
+                        } else if (bee_type < 3) {
+                            this.beeHive.addBee(Bee.createBee(Role.WORKER, Worker.Resource.POLLEN, this.beeHive));
+                        } else {
+                            this.beeHive.addBee(Bee.createBee(Role.WORKER, Worker.Resource.NECTAR, this.beeHive));
+                        }
+                        i--;
+                    }
+                    num_bees -= i;
+                    System.out.println("*Q* Queen birthed " + num_bees + " children");
+                }
+            } else {
+                this.readyToMate = false;
+            }
+        }
+        this.readyToMate = true;
+        while (this.beeHive.getQueensChamber().hasDrone()) {
+            this.beeHive.getQueensChamber().dismissDrone();
+        }
     }
 }
