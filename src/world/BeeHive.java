@@ -261,6 +261,12 @@ public class BeeHive {
      */
     public synchronized void deposit(Resource resource, Worker bee) {
         System.out.println("*BH* " + bee + " deposits");
-        // TODO
+        if (resource == Resource.NECTAR) {
+            this.nectar++;
+            this.nectarGathered++;
+        } else if (resource == Resource.POLLEN) {
+            this.pollen++;
+            this.pollenGathered++;
+        }
     }
 }
