@@ -81,7 +81,16 @@ public class Queen extends Bee {
                 if (this.beeHive.getQueensChamber().hasDrone()) {
                     this.beeHive.getQueensChamber().summonDrone();
                     this.readyToMate = false;
-                    //this.beeHive.getQueensChamber().getTopDrone().setMated();
+                    /*while (this.beeHive.getQueensChamber().getTopDrone().hasMated()) {
+                        try {
+                            this.beeHive.getQueensChamber().summonDrone();
+                            this.beeHive.getQueensChamber().getTopDrone().join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }*/
+                    this.beeHive.getQueensChamber().getTopDrone().setMated();
+                    this.beeHive.getQueensChamber().removeTopDrone();
 
                     try {
                         sleep(SLEEP_TIME_MS);
@@ -109,9 +118,13 @@ public class Queen extends Bee {
                 this.readyToMate = false;
             }
         }
+
         this.readyToMate = true;
         //this.beeHive.getQueensChamber().setDismissed();
         while (this.beeHive.getQueensChamber().hasDrone()) {
+            this.beeHive.getQueensChamber().dismissDrone();
+        }
+        while (this.beeHive.getQueensChamber().hasMatedDrone()) {
             this.beeHive.getQueensChamber().dismissDrone();
         }
     }

@@ -19,6 +19,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class QueensChamber {
     private ConcurrentLinkedQueue<Drone> drones;
+    private ConcurrentLinkedQueue<Drone> matedDrones;
     private Queen queen;
     private boolean dismissed;
 
@@ -29,6 +30,11 @@ public class QueensChamber {
     public QueensChamber() {
         this.dismissed = false;
         this.drones = new ConcurrentLinkedQueue<>();
+        this.matedDrones = new ConcurrentLinkedQueue<>();
+    }
+
+    public synchronized boolean hasMatedDrone() {
+        return this.matedDrones.size() > 0;
     }
 
     public void setQueen(Queen queen) {
@@ -39,7 +45,20 @@ public class QueensChamber {
         return this.drones.peek();
     }
 
-    public synchronized void removeDrone() {
+    public synchronized int getNumDrones() {
+        return this.drones.size();
+    }
+
+    public synchronized void setDismissed() {
+        this.dismissed = true;
+    }
+
+    public synchronized void removeMatedDrone(Drone drone) {
+        this.matedDrones.remove(drone);
+    }
+
+    public synchronized void removeTopDrone() {
+        this.matedDrones.add(this.drones.peek());
         this.drones.remove(this.drones.peek());
     }
 
@@ -61,7 +80,7 @@ public class QueensChamber {
     public synchronized void enterChamber(Drone drone) {
         System.out.println("*QC* " + drone + " enters chamber");
         this.drones.add(drone);
-        while (this.drones.peek() != drone || !this.queen.isReadyToMate()) {
+        while (this.drones.peek() != drone && !this.matedDrones.contains(drone) || !this.queen.isReadyToMate()) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -69,8 +88,11 @@ public class QueensChamber {
             }
         }
         System.out.println("*QC* " + drone + " leaves chamber");
-        this.drones.remove();
-        drone.setMated();
+        if (drone.hasMated() && !this.matedDrones.contains(drone)) {
+            this.matedDrones.add(drone);
+        }
+        this.drones.remove(drone);
+        //drone.setMated();
     }
 
     /**
@@ -96,7 +118,6 @@ public class QueensChamber {
      * dismiss all the drones that were waiting to mate. #rit_irl...
      */
     public synchronized void dismissDrone() {
-        this.dismissed = true;
         notifyAll();
     }
 

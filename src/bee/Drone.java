@@ -33,6 +33,10 @@ public class Drone extends Bee {
         this.mated = true;
     }
 
+    public synchronized boolean hasMated() {
+        return this.mated;
+    }
+
     /**
      * When the drone runs, they check if the bee hive is active.  If so,
      * they perform their sole task of entering the queen's chamber.
@@ -53,6 +57,7 @@ public class Drone extends Bee {
             this.beeHive.getQueensChamber().enterChamber(this);
         }
         if (this.mated) {
+            this.beeHive.getQueensChamber().removeMatedDrone(this);
             try {
                 sleep(MATE_TIME_MS);
             } catch (InterruptedException e) {
