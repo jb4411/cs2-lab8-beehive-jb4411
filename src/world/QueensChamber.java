@@ -104,7 +104,6 @@ public class QueensChamber {
             this.matedDrones.add(drone);
         }
         this.drones.remove(drone);
-        //drone.setMated();
     }
 
     /**
