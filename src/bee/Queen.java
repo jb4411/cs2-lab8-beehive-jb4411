@@ -47,6 +47,11 @@ public class Queen extends Bee {
         this.readyToMate = false;
     }
 
+    /**
+     * Tells whether or not the queen is ready to mate.
+     *
+     * @return whether or not the queen is ready to mate
+     */
     public boolean isReadyToMate() {
         return this.readyToMate;
     }

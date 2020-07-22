@@ -33,6 +33,11 @@ public class Drone extends Bee {
         this.mated = true;
     }
 
+    /**
+     * Tells whether or not this drone has mated.
+     *
+     * @return whether or not this drone has mated
+     */
     public synchronized boolean hasMated() {
         return this.mated;
     }

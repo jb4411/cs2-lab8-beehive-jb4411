@@ -33,14 +33,29 @@ public class QueensChamber {
         this.matedDrones = new ConcurrentLinkedQueue<>();
     }
 
+    /**
+     * Are there any drones that have mated?
+     *
+     * @return if there is at least one drone that has mated
+     */
     public synchronized boolean hasMatedDrone() {
         return this.matedDrones.size() > 0;
     }
 
+    /**
+     * Set the chamber's queen.
+     *
+     * @param queen the chamber's queen
+     */
     public void setQueen(Queen queen) {
         this.queen = queen;
     }
 
+    /**
+     * Get the front drone in the list of drones.
+     *
+     * @return the front drone in the list of drones
+     */
     public synchronized Drone getTopDrone() {
         return this.drones.peek();
     }
@@ -53,10 +68,18 @@ public class QueensChamber {
         this.dismissed = true;
     }
 
+    /**
+     * Remove a drone from the list of mated drones.
+     *
+     * @param drone the drone to be removed
+     */
     public synchronized void removeMatedDrone(Drone drone) {
         this.matedDrones.remove(drone);
     }
 
+    /**
+     * Remove the top drone from the list of drones that have not yet mated.
+     */
     public synchronized void removeTopDrone() {
         this.matedDrones.add(this.drones.peek());
         this.drones.remove(this.drones.peek());

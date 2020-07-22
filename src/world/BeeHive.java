@@ -68,9 +68,6 @@ public class BeeHive {
             this.bees.add(Bee.createBee(Role.WORKER, Resource.POLLEN, this));
         }
 
-
-
-
         this.active = true;
         this.numBorn = this.bees.size();
         this.nectarGathered = this.pollenGathered = 0;
