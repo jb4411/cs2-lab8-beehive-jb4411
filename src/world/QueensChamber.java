@@ -1,6 +1,5 @@
 package world;
 
-import bee.Bee;
 import bee.Drone;
 import bee.Queen;
 
@@ -21,14 +20,12 @@ public class QueensChamber {
     private ConcurrentLinkedQueue<Drone> drones;
     private ConcurrentLinkedQueue<Drone> matedDrones;
     private Queen queen;
-    private boolean dismissed;
 
     /**
      * Create the chamber. Initially there are no drones in the chamber and the
      * queen is not ready to mate.
      */
     public QueensChamber() {
-        this.dismissed = false;
         this.drones = new ConcurrentLinkedQueue<>();
         this.matedDrones = new ConcurrentLinkedQueue<>();
     }
@@ -58,14 +55,6 @@ public class QueensChamber {
      */
     public synchronized Drone getTopDrone() {
         return this.drones.peek();
-    }
-
-    public synchronized int getNumDrones() {
-        return this.drones.size();
-    }
-
-    public synchronized void setDismissed() {
-        this.dismissed = true;
     }
 
     /**

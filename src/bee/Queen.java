@@ -2,7 +2,6 @@ package bee;
 
 import util.RandomBee;
 import world.BeeHive;
-import world.QueensChamber;
 
 /**
  * The queen is the master of the bee hive and the only bee that is allowed
@@ -86,14 +85,6 @@ public class Queen extends Bee {
                 if (this.beeHive.getQueensChamber().hasDrone()) {
                     this.beeHive.getQueensChamber().summonDrone();
                     this.readyToMate = false;
-                    /*while (this.beeHive.getQueensChamber().getTopDrone().hasMated()) {
-                        try {
-                            this.beeHive.getQueensChamber().summonDrone();
-                            this.beeHive.getQueensChamber().getTopDrone().join();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }*/
                     this.beeHive.getQueensChamber().getTopDrone().setMated();
                     this.beeHive.getQueensChamber().removeTopDrone();
 
@@ -125,7 +116,6 @@ public class Queen extends Bee {
         }
 
         this.readyToMate = true;
-        //this.beeHive.getQueensChamber().setDismissed();
         while (this.beeHive.getQueensChamber().hasDrone()) {
             this.beeHive.getQueensChamber().dismissDrone();
         }
